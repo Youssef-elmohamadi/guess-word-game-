@@ -81,7 +81,7 @@ body {
 }
 .winner {
   position: absolute;
-  inset: 0;
+  left: 30%;
 }
 .hidden {
   display: none;

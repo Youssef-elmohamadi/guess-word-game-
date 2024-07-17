@@ -4,22 +4,52 @@ const typing = document.querySelector(".none"),
   guessCount = document.querySelector(".guess_count"),
   reset = document.querySelector("button"),
   winner = document.querySelector(".winner"),
-  succ = new Audio("/audio/YXFBY9J-win.mp3");
-
+  succ = new Audio("../audio/YXFBY9J-win.mp3");
 const Words = [
-  // ... (words array)
+  {
+    word: "react",
+    disc: "JavaScript library",
+  },
+  {
+    word: "vue",
+    disc: "JavaScript Framework",
+  },
+  {
+    word: "angular",
+    disc: "JavaScript MVW Framework",
+  },
+  {
+    word: "nodejs",
+    disc: "JavaScript runtime environment",
+  },
+  {
+    word: "php",
+    disc: "general-purpose scripting language",
+  },
+  {
+    word: "ruby",
+    disc: "open source programming language",
+  },
+  {
+    word: "python",
+    disc: "Programming Language",
+  },
+  {
+    word: "tailwind",
+    disc: "A utility-first CSS framework",
+  },
+  {
+    word: "bootstrap",
+    disc: "world's most famous free CSS framework",
+  },
 ];
-
 let Word;
 let countToWin = [];
 let maxGuess = 12;
-
 typing.addEventListener("input", startGame);
 getRandomWord();
 reset.addEventListener("click", getRandomWord);
-
 function getRandomWord() {
-  console.log("Getting a new random word.");
   freset();
   let random = Math.floor(Math.random() * Words.length);
   let randomObj = Words[random];
@@ -31,14 +61,11 @@ function getRandomWord() {
     inputs += `<input type="text" disabled />`;
   }
   inputsContainer.innerHTML = inputs;
-  console.log("Random word is:", Word);
 }
 
 document.addEventListener("keydown", () => typing.focus());
-
 function startGame(e) {
   char = e.target.value;
-  console.log("Input character:", char);
   if (!char.match(/[a-z]/i)) return;
   if (Word.includes(char)) {
     for (i = 0; i < Word.length; i++) {
@@ -58,7 +85,6 @@ function startGame(e) {
 
   typing.value = "";
   if (Word.length === countToWin.length) {
-    console.log("You win!");
     succ.play();
     countToWin = [];
     winner.classList.remove("hidden");
@@ -74,10 +100,13 @@ function startGame(e) {
 }
 
 function freset() {
-  console.log("Resetting game.");
+  // guees count
   maxGuess = 12;
+  // hidden winneer
   winner.classList.add("hidden");
+  // countToWin
   countToWin = [];
+  // paues audio
   succ.pause();
   succ.currentTime = 0;
 }
