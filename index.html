@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>guess Word</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="winner hidden">
+      <dotlottie-player
+        src="https://lottie.host/fe9da6c6-4085-4931-bc97-b2d2ac29372b/2jR44KtcYv.json"
+        background="transparent"
+        speed="1"
+        style="width: 500px; height: 300px"
+        direction="1"
+        playMode="normal"
+        autoplay
+      ></dotlottie-player>
+    </div>
+    <div class="app">
+      <div class="title">
+        <h1>خمن الكلمة</h1>
+      </div>
+
+      <div class="container">
+        <input class="none" type="text" maxlength="1" />
+        <div class="inputs"></div>
+        <div class="info">
+          <p class="disc">JavaScript library</p>
+          <p class="counter">
+            عدد المحاولات : <span class="guess_count"></span>
+          </p>
+        </div>
+        <button type="button">جرب مره تانيه 😊</button>
+      </div>
+    </div>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
