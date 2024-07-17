@@ -4,7 +4,7 @@ const typing = document.querySelector(".none"),
   guessCount = document.querySelector(".guess_count"),
   reset = document.querySelector("button"),
   winner = document.querySelector(".winner"),
-  succ = new Audio("/audio/YXFBY9J-win.mp3");
+  succ = new Audio("/guess-word-game-/audio/YXFBY9J-win.mp3");
 
 const Words = [
   // ... (words array)
