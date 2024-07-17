@@ -5,107 +5,90 @@ const typing = document.querySelector(".none"),
   reset = document.querySelector("button"),
   winner = document.querySelector(".winner"),
   succ = new Audio("/audio/YXFBY9J-win.mp3");
+
 const Words = [
-  {
-    word: "react",
-    disc: "JavaScript library",
-  },
-  {
-    word: "vue",
-    disc: "JavaScript Framework",
-  },
-  {
-    word: "angular",
-    disc: "JavaScript MVW Framework",
-  },
-  {
-    word: "nodejs",
-    disc: "JavaScript runtime environment",
-  },
-  {
-    word: "php",
-    disc: "general-purpose scripting language",
-  },
-  {
-    word: "ruby",
-    disc: "open source programming language",
-  },
-  {
-    word: "python",
-    disc: "Programming Language",
-  },
-  {
-    word: "tailwind",
-    disc: "A utility-first CSS framework",
-  },
-  {
-    word: "bootstrap",
-    disc: "world's most famous free CSS framework",
-  },
+  { word: "react", disc: "JavaScript library" },
+  { word: "vue", disc: "JavaScript Framework" },
+  { word: "angular", disc: "JavaScript MVW Framework" },
+  { word: "nodejs", disc: "JavaScript runtime environment" },
+  { word: "php", disc: "general-purpose scripting language" },
+  { word: "ruby", disc: "open source programming language" },
+  { word: "python", disc: "Programming Language" },
+  { word: "tailwind", disc: "A utility-first CSS framework" },
+  { word: "bootstrap", disc: "world's most famous free CSS framework" },
 ];
-let Word;
-let countToWin = [];
-let maxGuess = 12;
+
+let Word,
+  countToWin = [],
+  maxGuess = 12;
+
 typing.addEventListener("input", startGame);
-getRandomWord();
 reset.addEventListener("click", getRandomWord);
+
 function getRandomWord() {
   freset();
-  let random = Math.floor(Math.random() * Words.length);
-  let randomObj = Words[random];
+  const random = Math.floor(Math.random() * Words.length);
+  const randomObj = Words[random];
   Word = randomObj.word;
   disc.textContent = randomObj.disc;
   guessCount.innerText = maxGuess;
-  let inputs = "";
-  for (i = 0; i < Word.length; i++) {
-    inputs += `<input type="text" disabled />`;
-  }
-  inputsContainer.innerHTML = inputs;
+  inputsContainer.innerHTML = Word.split("")
+    .map(() => `<input type="text" disabled />`)
+    .join("");
+  typing.focus();
 }
 
 document.addEventListener("keydown", () => typing.focus());
+
 function startGame(e) {
-  char = e.target.value;
+  const char = e.target.value.toLowerCase();
   if (!char.match(/[a-z]/i)) return;
+
+  let correctGuess = false;
   if (Word.includes(char)) {
-    for (i = 0; i < Word.length; i++) {
+    Word.split("").forEach((letter, index) => {
       if (
-        Word[i] === char &&
-        !inputsContainer.querySelectorAll("input")[i].value
+        letter === char &&
+        !inputsContainer.querySelectorAll("input")[index].value
       ) {
-        inputsContainer.querySelectorAll("input")[i].value = char;
+        inputsContainer.querySelectorAll("input")[index].value = char;
         countToWin.push(char);
+        correctGuess = true;
       }
-    }
-  } else {
-    typing.value = "";
+    });
+  }
+
+  if (!correctGuess) {
     maxGuess--;
     guessCount.innerText = maxGuess;
   }
 
   typing.value = "";
-  if (Word.length === countToWin.length) {
+
+  if (countToWin.length === Word.length) {
     succ.play();
-    countToWin = [];
     winner.classList.remove("hidden");
+    countToWin = [];
   }
-  setTimeout(() => {
-    if (maxGuess <= 0) {
-      alert("  😄 ههههههههههه حمقك  :)");
-      for (let i = 0; i < Word.length; i++) {
-        inputsContainer.querySelectorAll("input")[i].value = Word[i];
-      }
-    }
-  });
+
+  if (maxGuess <= 0) {
+    setTimeout(() => {
+      alert(`Game Over! The word was: ${Word}`);
+      Word.split("").forEach((letter, index) => {
+        inputsContainer.querySelectorAll("input")[index].value = letter;
+      });
+    }, 0);
+  }
 }
 
 function freset() {
-  // guees count
   maxGuess = 12;
-  // hidden winneer
+  guessCount.innerText = maxGuess;
   winner.classList.add("hidden");
-  // countToWin
   countToWin = [];
-  // paues audio
   succ.pause();
+  succ.currentTime = 0;
+  typing.value = "";
 }
+
+getRandomWord();
